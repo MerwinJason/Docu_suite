@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Suite</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Libraries -->
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@7.1.0/build/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>DocSuite</span>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-header">Merging Tools</div>
+                <ul class="nav-links">
+                    <li data-target="pdf-merger">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>Merge PDFs</span>
+                    </li>
+                    <li data-target="excel-merger">
+                        <i class="fa-solid fa-file-excel"></i>
+                        <span>Merge Excels</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-header">Editing Tools</div>
+                <ul class="nav-links">
+                    <li data-target="pdf-tools">
+                        <i class="fa-solid fa-scissors"></i>
+                        <span>Page Tools</span>
+                    </li>
+                    <li data-target="pdf-deduplicator">
+                        <i class="fa-solid fa-clone"></i>
+                        <span>Deduplicator</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-header">Conversion Tools</div>
+                <ul class="nav-links">
+                    <li data-target="universal-converter">
+                        <i class="fa-solid fa-right-left"></i>
+                        <span>Universal Converter</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="nav-group">
+                <ul class="nav-links">
+                    <li class="active" data-target="home">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Home</span>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content-area">
+
+            <!-- Home Section -->
+            <section id="home" class="page active">
+                <div class="hero">
+                    <h1>Document Processing Suite</h1>
+                    <p>Your all-in-one tool for managing documents securely in your browser.</p>
+                </div>
+
+                <div class="category-section">
+                    <h2>Merging Tools</h2>
+                    <div class="features-grid">
+                        <div class="feature-card" onclick="navigateTo('pdf-merger')">
+                            <div class="icon-box pdf-color"><i class="fa-solid fa-file-pdf"></i></div>
+                            <h3>Merge PDFs</h3>
+                            <p>Combine multiple PDF files.</p>
+                        </div>
+                        <div class="feature-card" onclick="navigateTo('excel-merger')">
+                            <div class="icon-box excel-color"><i class="fa-solid fa-file-excel"></i></div>
+                            <h3>Merge Excels</h3>
+                            <p>Consolidate Excel sheets.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-section">
+                    <h2>Editing Tools</h2>
+                    <div class="features-grid">
+                        <div class="feature-card" onclick="navigateTo('pdf-tools')">
+                            <div class="icon-box tools-color"><i class="fa-solid fa-scissors"></i></div>
+                            <h3>Page Tools</h3>
+                            <p>Extract, remove, rotate pages.</p>
+                        </div>
+                        <div class="feature-card" onclick="navigateTo('pdf-deduplicator')">
+                            <div class="icon-box tools-color"><i class="fa-solid fa-clone"></i></div>
+                            <h3>Deduplicator</h3>
+                            <p>Remove duplicate pages.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-section">
+                    <h2>Conversion Tools</h2>
+                    <div class="features-grid">
+                        <div class="feature-card" onclick="navigateTo('universal-converter')">
+                            <div class="icon-group">
+                                <i class="fa-solid fa-file-word word-color"></i>
+                                <i class="fa-solid fa-arrow-right arrow-color"></i>
+                                <i class="fa-solid fa-file-pdf pdf-color"></i>
+                            </div>
+                            <h3>Universal Converter</h3>
+                            <p>Convert between PDF, Word, and more.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PDF Merger Section -->
+            <section id="pdf-merger" class="page">
+                <div class="tool-header">
+                    <h2><i class="fa-solid fa-file-pdf"></i> Merge PDFs</h2>
+                    <p>Drag and drop your PDF files here to combine them.</p>
+                </div>
+
+                <div class="drop-zone" id="pdf-drop-zone">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <p>Drag & Drop files here or <span class="browse-btn">Browse</span></p>
+                    <input type="file" id="pdf-input" multiple accept=".pdf" hidden>
+                </div>
+
+                <div class="options-panel">
+                    <div class="input-group">
+                        <label>Global Page Exclusion (Optional)</label>
+                        <input type="text" id="global-page-range"
+                            placeholder="e.g., first:1, last:1 (Applies to ALL files)">
+                    </div>
+                </div>
+
+                <div class="file-list" id="pdf-file-list"></div>
+
+                <button class="action-btn" id="merge-pdf-btn" disabled>
+                    <i class="fa-solid fa-bolt"></i> Merge Files
+                </button>
+            </section>
+
+            <!-- Excel Merger Section -->
+            <section id="excel-merger" class="page">
+                <div class="tool-header">
+                    <h2><i class="fa-solid fa-file-excel"></i> Merge Excels</h2>
+                    <p>Combine multiple Excel files into one.</p>
+                </div>
+
+                <div class="split-view">
+                    <div class="left-panel">
+                        <div class="drop-zone small" id="excel-drop-zone">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <p>Add Files</p>
+                            <input type="file" id="excel-input" multiple accept=".xlsx, .xls, .csv" hidden>
+                        </div>
+                        <div class="file-list" id="excel-file-list"></div>
+                    </div>
+
+                    <div class="right-panel">
+                        <h3>Merge Options</h3>
+                        <div class="input-group">
+                            <label>Header Row (0-based)</label>
+                            <input type="number" id="excel-header-row" value="0" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Column Handling</label>
+                            <select id="excel-merge-mode">
+                                <option value="union">Union (Keep All Columns)</option>
+                                <option value="intersection">Intersection (Common Columns Only)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Duplicate Handling</label>
+                            <select id="excel-dedupe-mode">
+                                <option value="keep">Keep All</option>
+                                <option value="drop">Drop Exact Duplicates</option>
+                            </select>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="include-filename" checked>
+                            <label for="include-filename">Include Filename Column</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="action-btn" id="merge-excel-btn" disabled>
+                    <i class="fa-solid fa-bolt"></i> Merge Files
+                </button>
+            </section>
+
+            <!-- PDF Tools Section -->
+            <section id="pdf-tools" class="page">
+                <div class="tool-header">
+                    <h2><i class="fa-solid fa-scissors"></i> PDF Page Tools</h2>
+                    <p>Remove, extract, or rotate pages.</p>
+                </div>
+
+                <div class="tool-container">
+                    <div class="drop-zone small" id="tools-drop-zone">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <p id="tools-file-name">Select a PDF file</p>
+                        <input type="file" id="tools-input" accept=".pdf" hidden>
+                    </div>
+
+                    <div class="controls disabled" id="tools-controls">
+                        <div class="input-group">
+                            <label>Page Range</label>
+                            <input type="text" id="page-range" placeholder="e.g., 1-3, 5, last">
+                            <small>Use '1-5', '1,3,5', 'first', 'last', '-3' (last 3 pages)</small>
+                        </div>
+
+                        <div class="actions-grid">
+                            <button class="action-btn secondary" id="keep-pages-btn">
+                                <i class="fa-solid fa-check"></i> Keep Selected
+                            </button>
+                            <button class="action-btn warning" id="remove-pages-btn">
+                                <i class="fa-solid fa-trash"></i> Remove Selected
+                            </button>
+                            <button class="action-btn secondary" id="rotate-cw-btn">
+                                <i class="fa-solid fa-rotate-right"></i> Rotate CW
+                            </button>
+                            <button class="action-btn secondary" id="rotate-ccw-btn">
+                                <i class="fa-solid fa-rotate-left"></i> Rotate CCW
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PDF Deduplicator Section -->
+            <section id="pdf-deduplicator" class="page">
+                <div class="tool-header">
+                    <h2><i class="fa-solid fa-clone"></i> PDF Deduplicator</h2>
+                    <p>Remove duplicate pages from a PDF.</p>
+                </div>
+                <div class="tool-container">
+                    <div class="drop-zone small" id="dedupe-drop-zone">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <p id="dedupe-file-name">Select a PDF file</p>
+                        <input type="file" id="dedupe-input" accept=".pdf" hidden>
+                    </div>
+                    <button class="action-btn" id="dedupe-btn" disabled style="margin-top: 2rem;">
+                        <i class="fa-solid fa-magic"></i> Remove Duplicates
+                    </button>
+                </div>
+            </section>
+
+            <!-- Universal Converter Section -->
+            <section id="universal-converter" class="page">
+                <div class="tool-header">
+                    <h2><i class="fa-solid fa-right-left"></i> Universal Converter</h2>
+                    <p>Convert documents between different formats.</p>
+                </div>
+                <div class="tool-container">
+                    <div class="drop-zone small" id="converter-drop-zone">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <p>Drag & Drop files (PDF, DOCX, PPTX) or <span class="browse-btn">Browse</span></p>
+                        <input type="file" id="converter-input" accept=".pdf, .docx, .pptx" multiple hidden>
+                    </div>
+
+                    <div class="actions-bar" style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                        <button class="action-btn" id="download-all-btn" style="width: auto; display: none;">
+                            <i class="fa-solid fa-download"></i> Download All
+                        </button>
+                    </div>
+
+                    <div id="converter-list" class="file-list"></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="notification-area"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
