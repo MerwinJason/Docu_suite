@@ -15,7 +15,10 @@ function navigateTo(targetId) {
     // Update Sidebar
     navLinks.forEach(l => l.classList.remove('active'));
     const activeLink = document.querySelector(`.nav-links li[data-target="${targetId}"]`);
-    if (activeLink) activeLink.classList.add('active');
+    if (activeLink) {
+        activeLink.classList.add('active');
+        activeLink.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
 
     // Update Pages
     pages.forEach(p => p.classList.remove('active'));

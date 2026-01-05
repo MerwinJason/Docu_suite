@@ -906,3 +906,124 @@ body {
     background: rgba(56, 189, 248, 0.2);
     color: #38bdf8;
 }
+
+/* --- Mobile Optimization --- */
+@media (max-width: 768px) {
+    body {
+        height: auto;
+        overflow-y: auto;
+    }
+
+    .app-container {
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+    }
+
+    /* Sidebar transforms into a sticky top bar */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding: 0.75rem 1rem;
+        border-right: none;
+        border-bottom: var(--glass-border);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        flex-direction: row;
+        align-items: center;
+        overflow-x: auto;
+        white-space: nowrap;
+        gap: 1rem;
+        background: rgba(30, 41, 59, 0.95);
+    }
+
+    .logo {
+        margin-bottom: 0;
+        margin-right: 0.5rem;
+        font-size: 1.2rem;
+        position: sticky;
+        left: 0;
+        background: inherit;
+        z-index: 10;
+        padding-right: 1rem;
+    }
+
+    .nav-group {
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-header {
+        display: none;
+    }
+
+    .nav-links {
+        flex-direction: row;
+        gap: 0.5rem;
+        padding: 0;
+    }
+
+    .nav-links li {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+        background: rgba(255, 255, 255, 0.05);
+        white-space: nowrap;
+    }
+
+    /* Content Area */
+    .content-area {
+        padding: 1rem;
+        overflow: visible;
+    }
+
+    .hero {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Tools Layout */
+    .split-view {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .right-panel {
+        width: 100%;
+    }
+
+    .actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .drop-zone {
+        padding: 2rem 1rem;
+    }
+
+    .drop-zone i {
+        font-size: 2rem;
+    }
+
+    /* Notifications */
+    #notification-area {
+        right: 1rem;
+        left: 1rem;
+        bottom: 1rem;
+        width: auto;
+    }
+
+    .toast {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .sidebar::-webkit-scrollbar {
+        height: 0px;
+        background: transparent;
+    }
+}
