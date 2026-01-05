@@ -69,6 +69,11 @@ function parsePageSet(expr, totalPages) {
 
     tokens.forEach(tok => {
         try {
+            if (tok === 'last' || tok === 'end') {
+                pages.add(totalPages - 1);
+                return;
+            }
+
             if (!isNaN(tok)) {
                 const i = parseInt(tok) - 1;
                 if (i >= 0 && i < totalPages) pages.add(i);
@@ -80,8 +85,8 @@ function parsePageSet(expr, totalPages) {
                 let start = startStr === '' ? 0 : parseInt(startStr) - 1;
                 let end = endStr === '' ? totalPages - 1 : parseInt(endStr) - 1;
 
-                if (startStr === 'last') start = totalPages - 1;
-                if (endStr === 'last') end = totalPages - 1;
+                if (startStr === 'last' || startStr === 'end') start = totalPages - 1;
+                if (endStr === 'last' || endStr === 'end') end = totalPages - 1;
 
                 if (isNaN(start)) start = 0;
                 if (isNaN(end)) end = totalPages - 1;
@@ -113,7 +118,7 @@ if (pdfDropZone) setupDragDrop(pdfDropZone, pdfInput, handlePdfFiles);
 function handlePdfFiles(files) {
     for (const file of files) {
         if (file.type === 'application/pdf') {
-            pdfFiles.push({ file: file, id: Math.random().toString(36).substr(2, 9) });
+            pdfFiles.push({ file: file, id: Math.random().toString(36).substr(2, 9), range: '' });
         } else {
             showToast(`Skipped ${file.name} (not a PDF)`, 'error');
         }
@@ -127,17 +132,58 @@ function renderPdfList() {
     pdfFiles.forEach((item, index) => {
         const div = document.createElement('div');
         div.className = 'file-item';
+        div.style.cursor = 'grab';
+
+        div.setAttribute('draggable', 'true');
+        div.addEventListener('dragstart', (e) => {
+            div.style.cursor = 'grabbing';
+            e.dataTransfer.setData('text/plain', index);
+            e.dataTransfer.effectAllowed = 'move';
+            div.style.opacity = '0.5';
+        });
+        div.addEventListener('dragend', () => {
+            div.style.opacity = '1';
+            div.style.cursor = 'grab';
+            document.querySelectorAll('.file-item').forEach(el => el.style.borderTop = '');
+        });
+        div.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            div.style.borderTop = '2px solid #007bff';
+        });
+        div.addEventListener('dragleave', () => {
+            div.style.borderTop = '';
+        });
+        div.addEventListener('drop', (e) => {
+            e.preventDefault();
+            div.style.borderTop = '';
+            const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+            const toIndex = index;
+            if (!isNaN(fromIndex) && fromIndex !== toIndex) {
+                const movedItem = pdfFiles[fromIndex];
+                pdfFiles.splice(fromIndex, 1);
+                pdfFiles.splice(toIndex, 0, movedItem);
+                renderPdfList();
+            }
+        });
+
         div.innerHTML = `
+            <i class="fa-solid fa-grip-vertical" style="margin-right: 10px; color: #aaa;"></i>
             <div class="file-info">
                 <i class="fa-solid fa-file-pdf pdf-color"></i>
                 <span>${item.file.name}</span>
-                <input type="text" id="range-${item.id}" placeholder="Omit: e.g. 1, 3-5">
+                <input type="text" id="range-${item.id}" placeholder="Excl: 1, 3-5, 10-end" value="${item.range || ''}" oninput="updatePdfRange('${item.id}', this.value)">
             </div>
             <i class="fa-solid fa-trash remove-file" onclick="removePdf(${index})"></i>
         `;
         pdfList.appendChild(div);
     });
 }
+
+window.updatePdfRange = (id, value) => {
+    const item = pdfFiles.find(f => f.id === id);
+    if (item) item.range = value;
+};
 
 window.removePdf = (index) => {
     pdfFiles.splice(index, 1);
